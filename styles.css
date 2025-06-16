@@ -22,7 +22,7 @@ body {
 
 /* Preloader */
 #preloader {
-  display: flex; /* Hiện loading ngay từ đầu */
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -43,10 +43,9 @@ body {
   position: fixed;
   bottom: 0; left: 0; width: 100%;
   z-index: 20;
-  min-height: 250px; /* hoặc cao hơn nếu muốn */
+  min-height: 250px;
   background: linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.7) 80%,rgba(0,0,0,0) 100%);
   display: none;
-  /* Bỏ flex, dùng position */
 }
 
 /* Character Name */
