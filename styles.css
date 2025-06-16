@@ -22,7 +22,7 @@ body {
 
 /* Preloader */
 #preloader {
-  display: none;
+  display: flex; /* Hiện loading ngay từ đầu */
   flex-direction: column;
   align-items: center;
   justify-content: center;
