@@ -1,0 +1,49 @@
+[
+  {
+    "character": "Lilith",
+    "text": "Well basically, Hiro is a digital journalism student.",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "But most of his time was spent learning about technology, rather than journalism.",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "So, his grades in class were just enough to pass.",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Oh, he also really likes playing games, especially anime gacha games.",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "He's a weeb, after all...",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "And some realistic First-Person Shooter games, I don't know why.",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Maybe because his passion for firearms?",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Well, atleast don't ask me why I call him Hiro. He just don't want me reveal his real name.",
+    "background": "./assets/cg_4.png"
+  },
+  {
+    "background": "./assets/cg_4.png",
+    "choices": [
+      { "text": "His skills?", "next": "./skill.json" },
+      { "text": "What about his education?", "next": "./education.json" }
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "character": "Lilith",
+    "text": "Hi there!",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Seem like Hiro is not here again...",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Haiz... He is always spending time on video games instead of going outside...",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Anyway!",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "I - Lilith - will be here to show you...",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "This is Hiro's Portfolio.",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "What do you want to know about him?",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "background": "./assets/cg_0.png",
+    "choices": [
+      { "text": "Something... basic?", "next": "./about.json" }
+    ]
+  }
+]

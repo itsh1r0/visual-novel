@@ -1,0 +1,81 @@
+[
+  {
+    "character": "Lilith",
+    "text": "About that...",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Let me change the scene first.",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Nothing too special, just a place that match the vibe.",
+    "background": "./assets/cg_4.png"
+  },
+  {
+    "sound": "./assets/snap.mp3",
+    "text": "*snap*",
+    "fade": true,
+    "background": "./assets/cg_8.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Well, Hiro's dream is becoming a Content creator.",
+    "background": "./assets/cg_5.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Like some famous Youtubers on the Internet.",
+    "background": "./assets/cg_7.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "It's his biggest dream right now, but somehow he still managed to have a backup plan.",
+    "background": "./assets/cg_8.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "That is Technician, like the IT guy in companies.",
+    "background": "./assets/cg_7.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "You know, he knows A LOT 'bout technology... things.",
+    "background": "./assets/cg_7.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Computer, smartphone, somethings like that.",
+    "background": "./assets/cg_8.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Ah, Hiro used to think about becoming a Game developer.",
+    "background": "./assets/cg_5.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "But... even though he knows how to actually code some projects...",
+    "background": "./assets/cg_5.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "He didn't think that's a great idea...",
+    "background": "./assets/cg_6.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Especially in this time...",
+    "background": "./assets/cg_6.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "The gaming industry is so competitive right now, you know?",
+    "background": "./assets/cg_6.png"
+  },
+  {
+    "next": "./ending.json"
+  }
+]

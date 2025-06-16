@@ -1,0 +1,94 @@
+[
+  {
+    "character": "Lilith",
+    "text": "Uhm... If you ask about coding projects...",
+    "background": "./assets/cg_4.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Hiro used to create plugins for Minecraft Server...",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "But he lost the source code of those.",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Right now, he has some projects on Modrinth and Github.",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "They're mods for Minecraft Fabric.",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Like, <a href='https://modrinth.com/mod/linear-sensitivity' target='_blank'>this mod</a> changing how sensitivity works in the game...",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Or, <a href='https://modrinth.com/mod/durability-tweak' target='_blank'>this mod</a> rebalance one enchantment in the game.",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Even though he did it too much...",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "But it is still his favorite project.",
+    "background": "./assets/cg_4.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "These mods actually different from plugins, but you don't need to know about that too much.",
+    "background": "./assets/cg_4.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Here's the link to <a href='https://github.com/itsh1r0' target='_blank'>Hiro's Github Profile</a>, which contains all his coding projects.",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "And... As a video editor...",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "He actually has a <a href='https://www.youtube.com/@ItsukaHiro' target='_blank'>Youtube Channel</a>.",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "But there're just around over 100 people subscribed to his channel.",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "And it's not active right now...",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "He stopped uploading videos like, 6 months?",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Lazy weeb huh...",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "background": "./assets/cg_2.png",
+    "choices": [
+      { "text": "What's his future plan?", "next": "./goal.json" },
+      { "text": "What about his education?", "next": "./education.json" }
+    ]
+  }
+]

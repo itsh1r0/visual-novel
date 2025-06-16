@@ -1,0 +1,63 @@
+[
+  {
+    "character": "Lilith",
+    "text": "Well, Hiro started learning programming in 2022, focusing on algorithms.",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "The first programming language he learnt is C++.",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Recently, after trying to create some plugins and mods for Minecraft, he started learning Java...",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Even it's just the basic, still enough to change some aspects of the game, drastically.",
+    "background": "./assets/cg_4.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Right now, he's learning about Python...",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Kinda confused at first....",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Ah, Hiro also know how to edit videos!",
+    "background": "./assets/cg_3.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Sometimes, he will create some videos about his passion, like games or technology.",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "But he doesn't like using Premiere Pro like most people...",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Because, well, you can't actually buy Adobe's software. You need to pay the subscription.",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "So he chosed DaVinci Resolve - kinda free if you don't need some professional and AI features.",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "background": "./assets/cg_0.png",
+    "choices": [
+      { "text": "Did he create any project?", "next": "./project.json"}
+    ]
+  }
+]

@@ -1,0 +1,64 @@
+[
+  {
+    "fade": true,
+    "background": "./assets/cg_9.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Anyway!",
+    "background": "./assets/cg_9.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "I think I'll give you these links.",
+    "background": "./assets/cg_9.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "They lead to his <a href='https://www.facebook.com/hiro.itsuka.00' target='_blank'>Facebook Account</a>, <a href='https://github.com/itsh1r0' target='_blank'>Github Profile</a>, and even his <a href='https://www.youtube.com/@ItsukaHiro' target='_blank'>Youtube Channel</a>.",
+    "background": "./assets/cg_9.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "And <a href='https://steamcommunity.com/id/itsukahiro/' target='_blank'>Steam Profile</a>, of course.",
+    "background": "./assets/cg_9.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Ah, this a cake for you.",
+    "background": "./assets/cg_a.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "A gift for the first time we met, I guess?",
+    "background": "./assets/cg_a.png"
+  },
+  {
+    "sound": "./assets/snap.mp3",
+    "text": "*snap*",
+    "background": "./assets/cg_c.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "I have somethings think to do that he just sent to me.",
+    "background": "./assets/cg_b.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "So yeah.",
+    "background": "./assets/cg_b.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "See you next time.",
+    "background": "./assets/cg_b.png"
+  },
+  {
+    "fade": true,
+    "background": "./assets/end.png"
+  },
+  {
+    "text": "The End.",
+    "background": "./assets/end.png"
+  }
+]

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VN Style Portfolio</title>
+  <link rel="icon" href="./assets/GameIcon.png" type="image/x-icon">
+  <link rel="preload" href="./assets/cg_0.png" as="image">
+  <link rel="preload" href="./assets/cg_1.png" as="image">
+  <link rel="preload" href="./assets/cg_2.png" as="image">
+  <link rel="preload" href="./assets/cg_3.png" as="image">
+  <link rel="preload" href="./assets/cg_4.png" as="image">
+  <link rel="preload" href="./assets/cg_5.png" as="image">
+  <link rel="preload" href="./assets/cg_6.png" as="image">
+  <link rel="preload" href="./assets/cg_7.png" as="image">
+  <link rel="preload" href="./assets/cg_8.png" as="image">
+  <link rel="preload" href="./assets/cg_9.png" as="image">
+  <link rel="preload" href="./assets/cg_a.png" as="image">
+  <link rel="preload" href="./assets/cg_b.png" as="image">
+  <link rel="preload" href="./assets/cg_c.png" as="image">
+  <link rel="preload" href="./font/MainDialoge SDF.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body onload="initApp()">
+  <div id="fade-overlay"></div>
+  <div id="preloader">
+    <img id="loading-img" src="" alt="Loading...">
+    <p>NOW LOADING...</p>
+    <div id="controls-guide" style="margin-top:24px; font-size:1.2rem; color:#fff; font-family:'MainDialoge', Arial, sans-serif; text-shadow:1px 1px 2px #000;">
+      <div><b>Mouse</b> / <b>Space</b>: Continue</div>
+      <div><b>F</b>: Fast Forward</div>
+      <div><b>Mouse Scroll</b>: Music Volume</div>
+      <div><b>M</b>: Mute/Unmute</div>
+    </div>
+  </div>
+  <div id="dialog-box">
+    <div id="character-name"></div>
+    <div id="dialog-container">
+      <div id="dialog-text"></div>
+    </div>
+    <div id="choices-container"></div>
+  </div>
+  <div id="volume-slider">
+    <img src="./assets/slider.png" class="slider-track" draggable="false">
+    <div class="slider-full-clip">
+      <img src="./assets/slider_full.png" class="slider-full" draggable="false">
+    </div>
+    <img src="./assets/slider_handle.png" class="slider-handle" id="slider-handle" draggable="false">
+  </div>
+  <div id="bgm-hint">Turn on BGM</div>
+  <audio id="bgm" src="./assets/Waterdrop.mp3" loop></audio>
+  <script defer>
+    let sliderHideTimeout = null, lastDialogSwitch = 0, fastForward = false, fastForwardInterval = null;
+    const loadingImgs = ["./assets/Load1.png", "./assets/Load2.png", "./assets/Load3.png"];
+    const selectedLoadingImg = loadingImgs[Math.floor(Math.random() * loadingImgs.length)];
+    const slider = document.getElementById('volume-slider');
+    const sliderHandle = document.getElementById('slider-handle');
+    const sliderFullClip = document.querySelector('.slider-full-clip');
+    const sliderFullImg = sliderFullClip.querySelector('.slider-full');
+    const sliderHeight = 400, handleHeight = 16, VOLUME_MIN = 0, VOLUME_MAX = 1.0, DEFAULT_VOLUME = 0.7;
+    let dialogs = [], currentDialogIndex = 0, isPreloading = true, isFading = false;
+    let volume = 0.7, lastNonZeroVolume = 0.7, dragging = false, skipNextClick = false, lastSliderClick = 0;
+    const readFiles = new Set();
+
+    function showSlider() {
+      if (isPreloading) return;
+      if (!slider.classList.contains("visible")) {
+        slider.classList.add("visible");
+        slider.classList.remove("fading-out");
+      }
+      if (sliderHideTimeout) clearTimeout(sliderHideTimeout);
+      sliderHideTimeout = setTimeout(hideSlider, 1000);
+    }
+
+    function hideSlider() {
+      slider.classList.remove("visible");
+      slider.classList.add("fading-out");
+      if (sliderHideTimeout) {
+        clearTimeout(sliderHideTimeout);
+        sliderHideTimeout = null;
+      }
+    }
+
+    async function loadDialogs(file = "prologue.json") {
+      const res = await fetch(file);
+      dialogs = await res.json();
+      currentDialogIndex = 0;
+      updateDialog();
+      readFiles.add(file);
+    }
+
+    async function initApp() {
+      document.body.style.backgroundColor = "#000";
+      document.getElementById("preloader").style.display = "flex";
+      const img = new Image();
+      img.src = selectedLoadingImg;
+      await new Promise(resolve => img.onload = resolve);
+      document.getElementById("loading-img").src = selectedLoadingImg;
+      const preloadPromise = Promise.all([
+        ...[
+          "./assets/cg_0.png","./assets/cg_1.png","./assets/cg_2.png","./assets/cg_3.png",
+          "./assets/cg_4.png","./assets/cg_5.png","./assets/cg_6.png","./assets/cg_7.png",
+          "./assets/cg_8.png","./assets/cg_9.png","./assets/cg_a.png","./assets/cg_b.png","./assets/cg_c.png"
+        ].map(src => new Promise(resolve => { const asset = new Image(); asset.src = src; asset.onload = resolve; })),
+        fetch("./font/MainDialoge SDF.ttf")
+      ]);
+      await Promise.all([preloadPromise, new Promise(r => setTimeout(r, 5000))]);
+      await loadDialogs();
+      document.body.style.backgroundImage = `url('${dialogs[0].background}')`;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.getElementById("preloader").style.display = "none";
+      document.getElementById("dialog-box").style.display = "block";
+      isPreloading = false;
+      setVolumeSlider(volume);
+
+      const bgm = document.getElementById("bgm");
+      const hint = document.getElementById('bgm-hint');
+      hint.style.display = "none";
+      try {
+        await bgm.play();
+      } catch (e) {
+        hint.style.display = "block";
+        hint.onclick = async function(event) {
+          event.stopPropagation();
+          try {
+            await bgm.play();
+            hint.style.display = "none";
+          } catch (e) {}
+        };
+      }
+    }
+
+    function setFade(active, instant = false) {
+      const overlay = document.getElementById("fade-overlay");
+      overlay.style.transition = instant ? "none" : "opacity 1s";
+      if (active) {
+        overlay.classList.add("active");
+        isFading = true;
+      } else {
+        overlay.classList.remove("active");
+        isFading = false;
+      }
+    }
+
+    async function updateDialog() {
+      const currentDialog = dialogs[currentDialogIndex];
+      const choicesContainer = document.getElementById("choices-container");
+
+      if (currentDialog.sound) {
+        const sfx = new Audio(currentDialog.sound);
+        sfx.volume = 1.0;
+        sfx.play().catch(() => {});
+      }
+
+      if (currentDialog.fade) {
+        document.body.style.backgroundImage = `url('${currentDialog.background}')`;
+        updateCharacterName(currentDialog);
+        updateDialogText(currentDialog);
+        setFade(true, true);
+        await new Promise(r => setTimeout(r, 1000));
+        setFade(false, false);
+        isFading = true;
+        await new Promise(r => setTimeout(r, 1000));
+        isFading = false;
+        currentDialogIndex++;
+        if (currentDialogIndex < dialogs.length) updateDialog();
+        return;
+      } else {
+        document.body.style.backgroundImage = `url('${currentDialog.background}')`;
+        updateCharacterName(currentDialog);
+        updateDialogText(currentDialog);
+      }
+
+      if (currentDialog.next && !currentDialog.choices) {
+        loadDialogs(currentDialog.next);
+        return;
+      }
+
+      choicesContainer.innerHTML = "";
+      if (currentDialog.choices) {
+        choicesContainer.style.display = "flex";
+        const filteredChoices = currentDialog.choices.filter(choice => {
+          if (choice.next && readFiles.has(choice.next)) return false;
+          if (
+            choice.next === "./goal.json" &&
+            (!readFiles.has("./education.json") || !readFiles.has("./skill.json"))
+          ) return false;
+          return true;
+        });
+        filteredChoices.forEach(choice => {
+          const btn = document.createElement("button");
+          btn.textContent = choice.text;
+          btn.className = "choice-btn";
+          btn.onclick = async (e) => {
+            e.stopPropagation();
+            await loadDialogs(choice.next);
+          };
+          choicesContainer.appendChild(btn);
+        });
+        if (filteredChoices.length === 0) {
+          choicesContainer.innerHTML = "<i>All paths have been read.</i>";
+        }
+      } else {
+        choicesContainer.style.display = "none";
+      }
+    }
+
+    function updateCharacterName(currentDialog) {
+      const nameBox = document.getElementById("character-name");
+      if (
+        typeof currentDialog.character === "string" &&
+        currentDialog.character.trim() !== ""
+      ) {
+        nameBox.textContent = currentDialog.character;
+        nameBox.style.display = "block";
+      } else {
+        nameBox.textContent = "";
+        nameBox.style.display = "none";
+      }
+    }
+
+    function updateDialogText(currentDialog) {
+      document.getElementById("dialog-text").innerHTML =
+        typeof currentDialog.text === "string" ? currentDialog.text : "";
+    }
+
+    function canSwitchDialog() {
+      const now = Date.now();
+      const limit = fastForward ? 50 : 350;
+      if (now - lastDialogSwitch < limit) return false;
+      lastDialogSwitch = now;
+      return true;
+    }
+
+    document.addEventListener("mousedown", function(e) {
+      if (
+        isFading ||
+        isPreloading ||
+        dialogs.length === 0 ||
+        dialogs[currentDialogIndex].choices ||
+        currentDialogIndex >= dialogs.length - 1 ||
+        e.target.closest('#volume-slider') ||
+        e.target.closest('#bgm-hint') ||
+        e.target.closest('a')
+      ) {
+        return;
+      }
+      if (!canSwitchDialog()) return;
+      currentDialogIndex++;
+      updateDialog();
+    });
+
+    document.getElementById('dialog-text').addEventListener('mousedown', function(e) {
+      if (e.target.closest('a')) e.stopPropagation();
+    });
+
+    document.addEventListener("keydown", function(e) {
+      if (
+        e.code === "Space" &&
+        !isFading &&
+        !isPreloading &&
+        dialogs.length > 0 &&
+        !dialogs[currentDialogIndex].choices &&
+        currentDialogIndex < dialogs.length - 1 &&
+        !document.activeElement.isContentEditable &&
+        document.activeElement.tagName !== "INPUT" &&
+        document.activeElement.tagName !== "TEXTAREA"
+      ) {
+        e.preventDefault();
+        if (!canSwitchDialog()) return;
+        currentDialogIndex++;
+        updateDialog();
+      }
+    });
+
+    document.addEventListener("keydown", async function(e) {
+      if (e.code === "KeyM") {
+        const hint = document.getElementById('bgm-hint');
+        const bgm = document.getElementById('bgm');
+        if (hint && hint.style.display === "block") {
+          try {
+            await bgm.play();
+            hint.style.display = "none";
+          } catch (err) {}
+        } else {
+          if (volume > 0) {
+            setVolumeSlider(0);
+          } else {
+            setVolumeSlider(lastNonZeroVolume > 0 ? lastNonZeroVolume : 0.7);
+          }
+        }
+      }
+    });
+
+    document.addEventListener("keydown", function(e) {
+      if (e.code === "KeyF" && !fastForward) {
+        fastForward = true;
+        if (
+          !isFading &&
+          !isPreloading &&
+          dialogs.length > 0 &&
+          !dialogs[currentDialogIndex].choices &&
+          currentDialogIndex < dialogs.length - 1
+        ) {
+          fastForwardInterval = setInterval(() => {
+            if (
+              isFading ||
+              isPreloading ||
+              dialogs.length === 0 ||
+              dialogs[currentDialogIndex].choices ||
+              currentDialogIndex >= dialogs.length - 1
+            ) {
+              clearInterval(fastForwardInterval);
+              fastForwardInterval = null;
+              return;
+            }
+            currentDialogIndex++;
+            updateDialog();
+          }, 50);
+        }
+      }
+    });
+    document.addEventListener("keyup", function(e) {
+      if (e.code === "KeyF") {
+        fastForward = false;
+        if (fastForwardInterval) {
+          clearInterval(fastForwardInterval);
+          fastForwardInterval = null;
+        }
+      }
+    });
+
+    function setVolumeSlider(vol) {
+      if (isPreloading) return;
+      showSlider();
+      volume = Math.max(VOLUME_MIN, Math.min(VOLUME_MAX, vol));
+      if (volume > 0) lastNonZeroVolume = volume;
+      const percent = volume / VOLUME_MAX;
+      const logVolume = Math.pow(percent, 1.5);
+      const handleY = (1 - percent) * (sliderHeight - handleHeight);
+      sliderHandle.style.top = `${handleY}px`;
+      const visibleHeight = percent * sliderHeight;
+      sliderFullClip.style.height = `${visibleHeight}px`;
+      sliderFullClip.style.bottom = '0';
+      sliderFullImg.style.bottom = '0';
+      sliderFullImg.style.top = 'auto';
+      sliderFullImg.style.transform = 'none';
+      const bgm = document.getElementById('bgm');
+      if (bgm) bgm.volume = logVolume;
+    }
+
+    sliderHandle.addEventListener('mousedown', function(e) {
+      if (isPreloading) return;
+      showSlider();
+      dragging = true;
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mouseup', function(e) {
+      if (dragging) {
+        dragging = false;
+        skipNextClick = true;
+        document.body.style.userSelect = '';
+        e.preventDefault && e.preventDefault();
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (skipNextClick) {
+        skipNextClick = false;
+        e.stopPropagation && e.stopPropagation();
+        e.preventDefault && e.preventDefault();
+        return;
+      }
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      const rect = slider.getBoundingClientRect();
+      let y = e.clientY - rect.top;
+      y = Math.max(0, Math.min(sliderHeight - handleHeight, y));
+      const percent = 1 - y / (sliderHeight - handleHeight);
+      setVolumeSlider(percent * VOLUME_MAX);
+    });
+
+    slider.addEventListener('click', function(e) {
+      if (isPreloading) return;
+      e.stopPropagation();
+      const now = Date.now();
+      if (now - lastSliderClick < 200) {
+        setVolumeSlider(DEFAULT_VOLUME);
+      } else {
+        const rect = slider.getBoundingClientRect();
+        let y = e.clientY - rect.top;
+        y = Math.max(0, Math.min(sliderHeight - handleHeight, y));
+        const percent = 1 - y / (sliderHeight - handleHeight);
+        setVolumeSlider(percent * VOLUME_MAX);
+      }
+      lastSliderClick = now;
+    });
+
+    slider.addEventListener('mouseenter', function() {
+      if (isPreloading) return;
+      showSlider();
+    });
+    slider.addEventListener('mousemove', function() {
+      if (isPreloading) return;
+      showSlider();
+    });
+    slider.addEventListener('mouseleave', function() {
+      if (isPreloading) return;
+      if (sliderHideTimeout) clearTimeout(sliderHideTimeout);
+      sliderHideTimeout = setTimeout(hideSlider, 1000);
+    });
+
+    window.addEventListener('wheel', function(e) {
+      if (
+        isPreloading ||
+        document.activeElement.isContentEditable ||
+        document.activeElement.tagName === "INPUT" ||
+        document.activeElement.tagName === "TEXTAREA"
+      ) return;
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.02 : 0.02;
+      showSlider();
+      setVolumeSlider(volume + delta);
+    }, { passive: false });
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+[
+  {
+    "character": "Lilith",
+    "text": "As I said, Hiro is a 3rd year digital journalism student at PTIT.",
+    "background": "./assets/cg_0.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "Only 1 more year and he will graduate.",
+    "background": "./assets/cg_4.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "You may ask why he choosing journalism while digging so much about programming and technology?",
+    "background": "./assets/cg_1.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "To be honest, I don't know.",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "character": "Lilith",
+    "text": "He actually never told me about that...",
+    "background": "./assets/cg_2.png"
+  },
+  {
+    "background": "./assets/cg_2.png",
+    "choices": [
+      { "text": "His skills?", "next": "./skill.json" },
+      { "text": "What's his future plan?", "next": "./goal.json" }
+    ]
+  }
+]
